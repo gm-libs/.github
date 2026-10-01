@@ -84,6 +84,18 @@ A library that talks to Postgres, Redis or a browser tests against the real thin
 
 Gate on exit codes, never on matched output. A chain like `run-tests | grep -E 'passed|failed' && git commit && git push` reports success whenever grep finds its line, failing or not. Run the checks, keep the real status, continue only when it is zero.
 
+## Lint and format
+
+TypeScript and JavaScript are linted with [Oxlint](https://oxc.rs/docs/guide/usage/linter), its type-aware rules included through `oxlint-tsgolint`, and formatted with [Prettier](https://prettier.io). Prettier also formats JSON, YAML and CSS. Markdown is neither formatted nor linted, since Prettier pads tables and can rewrap prose; the writing rules below cover it instead. Workflow files go through actionlint. `oxlint`, `oxlint-tsgolint` and `prettier` are pinned to exact versions, because a Prettier patch release can move formatting and Oxlint ships weekly. Libraries move to this one at a time, so one still on ESLint keeps it until its own switch.
+
+**The repository decides, not the editor.** `.oxlintrc.json` holds the rules and, under `options`, `typeAware` and `denyWarnings`, so a bare `oxlint` runs exactly what CI runs, from a terminal, an editor's Oxlint integration or an agent. `.prettierrc` sets the formatting, and `.editorconfig` sets indentation, line endings and the final newline for every editor. The scripts are the same in every library: `npm run lint`, `npm run lint:fix`, `npm run format` and `npm run format:check`. No repository commits editor settings: `.vscode/` and `.idea/` are in `.gitignore`, so each person keeps their own locally, in whichever editor they use. Every editor's Prettier and Oxlint integration reads the repository's own files, and the worst a personal setting can do is make someone run `npm run format`.
+
+**Every rule is an error or off, and a warning fails.** A rule that fires everywhere is fixed, or configured once in `.oxlintrc.json` with its reason, never silenced line by line. Import boundaries, such as keeping server-only code out of a browser entry point, are `no-restricted-imports` groups of globs per folder, never regexes: Oxlint's regex engine has no lookahead, so a lookahead pattern matches nothing and raises no error. Prove each boundary by adding a violating import and watching the lint fail. Keep `baseUrl` out of `tsconfig.json`, since the type-aware rules check with TypeScript 7's compiler even where the build uses 6. A library that needs what Oxlint cannot do, such as a custom type-aware rule, uses ESLint with typescript-eslint's `recommended-type-checked` and says why in its README.
+
+**CI is the only gate.** The gate runs lint, the format check, typecheck, tests, build and the pack smoke test. There are no git hooks: several people, sessions and worktrees share each repository, and a hook that rewrites files fights all of them. A library that turns formatting on for the first time reformats everything in one pull request that does nothing else, and lists that commit in `.git-blame-ignore-revs`.
+
+**Coding assistants** may run Prettier on the files they edited. They never apply lint fixes on their own.
+
 ## Documentation moves with the code
 
 If a change makes an existing document wrong, that document is fixed in the same pull request. No follow-up issue for it, no "TODO: update README". This covers the README's entry-point table, the changelog, usage sections when an export, option or environment variable changes, and anything under a docs directory.
