@@ -54,13 +54,9 @@ Every change that ships bumps the package version, even a tiny one, because pack
 
 Releases are cut by the release workflow, which runs the gate, tags, and publishes an immutable version. Never publish by hand. Never commit a packed tarball, and never vendor a package into a consumer: a consumer pins the exact version it was tested with, and a range in a consumer's manifest is a bug report waiting to happen. The first release of a new package needs setup outside the repository, so ask before cutting it.
 
-## AI assistance, declared
+## Authorship
 
-Coding assistants are fine to use here. What is not fine is a reviewer being unable to tell.
-
-**Say which assistant you used, in the pull request body.** One line, the tool and the model, for example `AI assistance: Claude Code, Opus 5` or `AI assistance: none`. That is all. It changes nothing about how the change is reviewed, and it is not a confession: it tells whoever reads the diff what kind of mistakes to look for, which is a different set for generated code than for hand-written code. A pull request that does not say is assumed to have used one.
-
-**A `Co-authored-by` trailer naming the model is welcome on the commit.** Welcome rather than tolerated, because it puts the fact where the record lives. It does not replace the pull request line, since a trailer on one commit says nothing about the other six and the pull request body is what gets read before the diff. What does not belong in a commit message is a generated-with footer or any other tool advertisement, which is marketing rather than attribution. The repository owner's own commits carry no trailer, by preference on his own history, so do not read the existing log as contradicting this. You are responsible for what you submit either way: a model wrote it, you are shipping it.
+Changes are not attributed to the tools that helped write them, in a commit or in a pull request: the committer is the author, and review is what vouches for a change.
 
 ## Pull requests
 

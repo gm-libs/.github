@@ -16,10 +16,6 @@ Issue Number: #
 
 <!-- Anything a user can see needs a picture: a screenshot for a static change, a short screen recording for motion, a state change or more than one step. Before and after, when there was a before. Delete this section for changes with no visible surface. -->
 
-## AI assistance
-
-<!-- One line: the tool and the model, for example "Claude Code, Opus 5", or "none". It changes nothing about review, it tells the reviewer what kind of mistakes to look for. Not declaring is read as having used one. -->
-
 <!--
-Before you open it: no absolute paths from your disk, no internal shorthand, no consumer's detail. Repository relative paths and plain description only. No AI attribution in the commits themselves, it belongs here.
+Before you open it: no absolute paths from your disk, no internal shorthand, no consumer's detail. Repository relative paths and plain description only. Changes are not attributed to tools, in the commits or in this body.
 -->
